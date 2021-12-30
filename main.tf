@@ -186,9 +186,8 @@ resource "azurerm_virtual_machine_extension" "vm_init" {
 
   settings = <<SETTINGS
     {   
-    "fileUris": [ "https://.../script.sh}" ],
+    "fileUris": [ "https://raw.githubusercontent.com/bohdanborysovskyi/azuretask/main/script.sh" ],
     "commandToExecute": "bash script.sh"
     }
 SETTINGS
-
 }
