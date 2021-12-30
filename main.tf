@@ -135,6 +135,7 @@ output "tls_private_key" {
 variable "instance_count" {
   default = "2"
 }
+
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "trtesttaskvm" {
     name                  = "server-${count.index}"
@@ -173,4 +174,21 @@ resource "azurerm_linux_virtual_machine" "trtesttaskvm" {
     tags = {
         environment = "Test Task"
     }
+}
+
+
+resource "azurerm_virtual_machine_extension" "vm_init" {
+  name                 = "hostname"
+  virtual_machine_id   = azurerm_linux_virtual_machine.trtesttaskvm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+    {   
+    "fileUris": [ "https://.../script.sh}" ],
+    "commandToExecute": "bash script.sh"
+    }
+SETTINGS
+
 }
